@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=Doto:wght@100..900&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Pacifico&family=Sevillana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@400..700&family=Doto:wght@100..900&family=Edu+AU+VIC+WA+NT+Arrows:wght@400..700&family=Edu+AU+VIC+WA+NT+Pre:wght@400..700&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Pacifico&family=Sevillana&display=swap" rel="stylesheet">
+<head>
+  <title>Amy and her friends</title>
+  <style>
+  
+    body {
+      text-align: center;
+      background: url(https://i.pinimg.com/474x/26/3b/c1/263bc1d51b7448de6b26101775dfb75e.jpg);
+      background-size: cover;
+      background-position: center;
+      color: purple;
+      font-family: "Sevillana", serif;
+    }
+    img{
+      border-radius: 300px
+    }
+    p {
+      font-size: 22px;
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+      background:purple;
+    }
+    input[type="submit"] {
+      background: pink;
+      color: purple;
+     font-family :"Sevillana", serif;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://i.pinimg.com/474x/92/c3/ad/92c3add3c215491c30e01ca99e6ac181.jpg">
+  <p>Hi! cutie kitty's</p>
+  <input id="Name" placeholder="your username">
+  <input id="Email" placeholder="Your email">
+  <input id="submit" type="submit">
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+	
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAzzBF2zygtfM6XF-obPx_JD1mCh1ikMD8",
+      authDomain: "amycookie-bdf63.firebaseapp.com",
+      projectId: "amycookie-bdf63",
+      storageBucket: "amycookie-bdf63.firebasestorage.app",
+      messagingSenderId: "714607513763",
+      appId: "1:714607513763:web:bb803ff039f95b69592f16"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+	const db = getDatabase(app);
+	
+	const Name = document.querySelector("#Name") 
+	const Email = document.querySelector("#Email")
+	document.querySelector('#submit').addEventListener('click', Submit)
+	
+	function Submit() {
+		  const timestamp = buildTimestamp()
+	  
+		  set(ref(db, timestamp), {
+			  Name: Name.value,
+		      email: Email.value,
+		  });
+
+		  Name.value = ""
+		  Email.value = ""
+		}
+		function buildTimestamp() {
+		  const now = new Date();
+		  let timestamp = now.getFullYear().toString() + "/";
+		  //const month = now.toLocaleString('default', { month: 'long' });
+
+		  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+		  month = month.toString()
+		  month = addLeadingZero(month)
+		  timestamp += month + "/"; 
+
+		  let date = now.getDate().toString()
+		  date = addLeadingZero(date)
+		  timestamp += date + "/";
+
+		  let hours = now.getHours().toString()
+		  hours = addLeadingZero(hours)
+		  timestamp += hours + ":";
+
+		  let minutes = now.getMinutes().toString()
+		  minutes = addLeadingZero(minutes)
+		  timestamp += minutes + ":";
+
+		  let seconds = now.getSeconds().toString()
+		  seconds = addLeadingZero(seconds)
+		  timestamp += seconds;
+  
+		  return timestamp
+		}
+	
+		function addLeadingZero(units) {
+			if (units.length < 2) {
+				units = "0" + units
+			}
+			return units
+		}
+	
+	
+	
+	
+	
+	
+  </script>
+</body>
